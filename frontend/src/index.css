@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ═══ DARK PROFESSIONAL THEME ═══ */
+  --color-background: hsl(222 47% 6%);
+  --color-foreground: hsl(210 40% 96%);
+  --color-card: hsl(222 35% 9%);
+  --color-card-foreground: hsl(210 40% 96%);
+  --color-popover: hsl(222 40% 10%);
+  --color-popover-foreground: hsl(210 40% 96%);
+  --color-primary: hsl(217 91% 60%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  --color-secondary: hsl(222 30% 14%);
+  --color-secondary-foreground: hsl(210 40% 90%);
+  --color-muted: hsl(222 30% 14%);
+  --color-muted-foreground: hsl(215 20% 55%);
+  --color-accent: hsl(222 30% 16%);
+  --color-accent-foreground: hsl(210 40% 96%);
+  --color-destructive: hsl(0 72% 51%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-border: hsl(222 20% 16%);
+  --color-input: hsl(222 20% 16%);
+  --color-ring: hsl(217 91% 60%);
+  --color-success: hsl(142 71% 45%);
+  --color-warning: hsl(38 92% 50%);
+  --radius: 0.625rem;
+
+  --animate-fade-in: fade-in 0.4s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out;
+  --animate-scale-in: scale-in 0.2s ease-out;
+  --animate-shimmer: shimmer 2s infinite;
+  --animate-glow: glow 3s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    color-scheme: dark;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: linear-gradient(135deg, hsl(222 47% 6%) 0%, hsl(230 30% 4%) 50%, hsl(220 40% 3%) 100%);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  ::selection {
+    background-color: hsl(217 91% 60% / 0.25);
+    color: hsl(210 40% 96%);
+  }
+}
+
+/* Scrollbar styling — dark */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(222 20% 22%); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(222 20% 30%); }
+
+/* Smooth transitions for interactive elements */
+button, a, input, select, textarea {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-duration: 150ms;
+}
+
+/* Focus visible ring */
+:focus-visible {
+  outline: 2px solid hsl(217 91% 60%);
+  outline-offset: 2px;
+}
+
+/* Card glass effect */
+.bg-card {
+  background-color: var(--color-card);
+  backdrop-filter: blur(12px);
+}
+
+/* Subtle glow on primary gradients */
+.shadow-primary\/25 { box-shadow: 0 4px 14px hsl(217 91% 60% / 0.25); }
+.shadow-primary\/30 { box-shadow: 0 6px 20px hsl(217 91% 60% / 0.30); }
+
+/* ═══════════ MICRO-INTERACTIONS ═══════════ */
+
+/* Global 300ms smooth transition baseline */
+*, *::before, *::after {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Badge micro-interactions ── */
+[class*="Badge"],
+.badge {
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+[class*="Badge"]:hover,
+.badge:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.15);
+}
+
+/* ── Avatar hover glow ── */
+[class*="Avatar"]:hover {
+  transform: scale(1.08);
+  transition: transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Input focus glow ── */
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 3px hsl(217 91% 60% / 0.1), 0 0 20px hsl(217 91% 60% / 0.05);
+  transition: box-shadow 300ms ease, border-color 300ms ease;
+}
+
+/* ── Table row hover slide ── */
+tbody tr {
+  transition: background-color 300ms ease, transform 200ms ease;
+}
+tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* ── Dialog/Popover entry animations ── */
+[data-state="open"][role="dialog"],
+[data-state="open"][data-radix-popper-content-wrapper] {
+  animation: dialog-enter 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+@keyframes dialog-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Dropdown menu items ── */
+[role="menuitem"] {
+  transition: background-color 200ms ease, color 200ms ease, padding-left 200ms ease;
+}
+[role="menuitem"]:hover {
+  padding-left: 14px;
+}
+
+/* ── Select items ── */
+[role="option"] {
+  transition: background-color 200ms ease;
+}
+
+/* ── Smooth scrolling ── */
+main, [class*="overflow-auto"] {
+  scroll-behavior: smooth;
+}
+
+/* ── Link underline animation ── */
+a[class*="hover\\:underline"] {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition: background-size 300ms ease;
+}
+a[class*="hover\\:underline"]:hover {
+  background-size: 100% 1px;
+}
+
+/* ── Icon hover spin (for refresh/loading icons) ── */
+.icon-spin-hover:hover svg {
+  transform: rotate(180deg);
+  transition: transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Pulse ring for notification dots ── */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 hsl(217 91% 60% / 0.4); }
+  70% { box-shadow: 0 0 0 6px hsl(217 91% 60% / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(217 91% 60% / 0); }
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2s ease-in-out infinite;
+}
